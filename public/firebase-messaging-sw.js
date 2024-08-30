@@ -77,7 +77,7 @@ messaging.onBackgroundMessage((payload) => {
 	// };
 
 	const notificationOptions = {
-		body: "ahmed",
+		body: "Background",
 		icon: "./favicon-16x16.png",
 		badge: "./favicon-32x32.png",
 		image: "./android-chrome-512x512.png",
@@ -101,7 +101,7 @@ messaging.onBackgroundMessage((payload) => {
 			click_action: "/",
 		},
 	};
-	const notificationTitle = "Sahil";
+	const notificationTitle = "Background";
 
 	// //show notif
 	self.registration.showNotification(

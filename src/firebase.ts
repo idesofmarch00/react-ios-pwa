@@ -38,7 +38,9 @@ type notificationOptions = { body: string,
 	},}
 // Function to show notification
 function showNotification(title:string, options:notificationOptions) {
-	alert(navigator.userAgent)
+
+	alert(navigator.userAgent);
+
 	if (isChromiumBasedAndroid()) {
 	  // Use service worker to show notification on Chrome for Android
 	  if ('serviceWorker' in navigator && 'PushManager' in window) {
@@ -67,8 +69,8 @@ onMessage(messaging, (payload) => {
 	const audio = new Audio("./notification.mp3");
 	audio.play();
   
-	showNotification(payload.notification?.title || "New Notification", {
-	  body: payload.notification?.body as string,
+	showNotification("Foreground", {
+	  body: "Foreground",
 	  icon: "./icon-192x192.png",
 	  requireInteraction: true,
 	  tag: "renotify",
