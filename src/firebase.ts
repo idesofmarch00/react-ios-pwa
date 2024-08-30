@@ -52,13 +52,14 @@ onMessage(messaging, (payload) => {
 
 function showNotification(title: string, options: notificationOptions) {
 	const platform = detectPlatform();
+	alert(platform);
 	
 	switch(platform) {
 	  case 'iOS':
 		// On iOS, we'll use a custom alert or UI element
 		showIOSAlert(title, options.body);
 		break;
-	  case 'ChromeAndroid':
+	  case 'Android':
 		if ('serviceWorker' in navigator && 'PushManager' in window) {
 		  navigator.serviceWorker.ready.then(function(registration) {
 			registration.showNotification(title, options);
