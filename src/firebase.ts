@@ -58,9 +58,9 @@ function showNotification(title: string, options: notificationOptions) {
 	  case 'iOS':
 		// On iOS, we'll use a custom alert or UI element
 		navigator.serviceWorker.ready.then(function(registration) {
-			registration.showNotification(title, options);
+			registration.showNotification("foreground", options);
 		  });
-		  new Notification(title, options);
+		  new Notification("foreground", options);
 		showIOSAlert(title, options.body);
 		break;
 	  case 'Android':
