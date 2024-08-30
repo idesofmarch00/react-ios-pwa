@@ -41,45 +41,45 @@ firebase.initializeApp({ ...firebaseConfig });
 const messaging = firebase.messaging();
 
 // //todo: remove if confirmed doesn't work
-// messaging.onMessage((payload) => {
+messaging.onMessage((payload) => {
 	
-// 	alert("foreground Notification received sw");
+	alert("foreground Notification received sw");
 
-// 	const notificationTitle = "foreground";
-// 	const notificationOptions = {
-// 		body: "foreground",
-// 		icon: "./icons/fb_min_logo.png",
-// 		badge: "./icons/fb_min_logo.png",
-// 		tag: "renotify",
-// 		renotify: true,
-// 		requireInteraction: true,
-// 		sound: "../src/assets/sounds/notification.mp3",
-// 		timestamp: Date.parse(new Date()),
-// 		actions: [
-// 			{
-// 				action: "open-app",
-// 				type: "button",
-// 				title: "Order",
-// 				icon: "../src/assets/tanker-truck.svg",
-// 			},
-// 		],
-// 		data: {
-// 			time: new Date(Date.now()).toString(),
-// 			message: "new order",
-// 		},
-// 	};
+	const notificationTitle = "foreground";
+	const notificationOptions = {
+		body: "foreground",
+		icon: "./icons/fb_min_logo.png",
+		badge: "./icons/fb_min_logo.png",
+		tag: "renotify",
+		renotify: true,
+		requireInteraction: true,
+		sound: "../src/assets/sounds/notification.mp3",
+		timestamp: Date.parse(new Date()),
+		actions: [
+			{
+				action: "open-app",
+				type: "button",
+				title: "Order",
+				icon: "../src/assets/tanker-truck.svg",
+			},
+		],
+		data: {
+			time: new Date(Date.now()).toString(),
+			message: "new order",
+		},
+	};
 
-// 	self.registration.showNotification(
-// 		notificationTitle,
-// 		notificationOptions,
-// 	);
+	self.registration.showNotification(
+		notificationTitle,
+		notificationOptions,
+	);
 
-// // 	// // Handle click on the notification (optional)
-// // 	// notification.addEventListener("click", () => {
-// // 	// 	// Do something when the user clicks the notification
-// // 	// 	console.log("Notification clicked");
-// // 	// });
-// });
+// 	// // Handle click on the notification (optional)
+// 	// notification.addEventListener("click", () => {
+// 	// 	// Do something when the user clicks the notification
+// 	// 	console.log("Notification clicked");
+// 	// });
+});
 
 //100% working
 messaging.onBackgroundMessage((payload) => {
