@@ -1,6 +1,10 @@
 import {useState} from 'react'
-// import Notification from './Notification'
+import Message from "./Message";
+import "react-toastify/dist/ReactToastify.css";
 import { getNotificationPermission,getMessagingToken } from './general';
+import { toast, ToastContainer } from "react-toastify";
+import { onMessage } from 'firebase/messaging';
+import {messaging} from './firebase';
 
 function App() {
   const [text, setText] = useState('');
@@ -16,6 +20,16 @@ function App() {
       console.error('Failed to copy text: ', err);
     }
   };
+
+  onMessage(messaging, (payload) => {
+    if (payload.notification) {
+      toast(<Message notification={{
+        title: payload.notification.title || '',
+        body: payload.notification.body || '',
+        image: payload.notification.image
+      }} />);
+    }
+  });
 
   return (
     <div className="flex flex-col items-center space-y-10 text-white min-h-screen max-w-1/2 bg-gray-100 flex items-center justify-center bg-gray-800">
@@ -36,7 +50,7 @@ function App() {
         <p className='mt-4'>token</p>
         <button onClick={copyToClipboard} className='mb-4 border overflow-auto h-20 rounded-lg px-4 py-2 text-sm font-bold text-white'><p>{text}</p></button>
     </div>
-    {/* <Notification /> */}
+    <ToastContainer />
       </div>
   )
 }
