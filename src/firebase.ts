@@ -33,7 +33,7 @@ type notificationOptions = { body: string,
 // Usage in your onMessage handler
 onMessage(messaging, (payload) => {
 	console.log("Message received in firebase.ts=> ", payload.notification);
-	alert("Foreground message received: " + payload.notification?.title + " " + payload.notification?.body);
+	// alert("Foreground message received: " + payload.notification?.title + " " + payload.notification?.body);
   
 	// const audio = new Audio("./notification.mp3");
 	// audio.play();
@@ -57,6 +57,10 @@ function showNotification(title: string, options: notificationOptions) {
 	switch(platform) {
 	  case 'iOS':
 		// On iOS, we'll use a custom alert or UI element
+		navigator.serviceWorker.ready.then(function(registration) {
+			registration.showNotification(title, options);
+		  });
+		  new Notification(title, options);
 		showIOSAlert(title, options.body);
 		break;
 	  case 'Android':
