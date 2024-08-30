@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import Notification from './Notification'
+// import Notification from './Notification'
 import { getNotificationPermission,getMessagingToken } from './general';
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
         <button onClick={async()=>{const token = await getMessagingToken();setText(token as string)}} className='text-blue-900 font-bold w-40 h-10 bg-blue-400 rounded-lg text-sm'>Get token</button>
         <button onClick={copyToClipboard} className='my-4 border overflow-auto h-20 rounded-lg p-4 text-sm font-bold'><p>{text}</p></button>
     </div>
-    <Notification />
+    {/* <Notification /> */}
       </div>
   )
 }
