@@ -21,93 +21,62 @@ export const onMessageListener = () =>
     });
 });
 
-//for foreground notification, 100% working
+// Function to detect Chrome on Android
+function isChromiumBasedAndroid() {
+	return /android/i.test(navigator.userAgent) &&
+		   /chrome/i.test(navigator.userAgent) &&
+		   !(/firefox|opera|edge|opr\//i.test(navigator.userAgent));
+  }
+  
+type notificationOptions = { body: string,
+	icon: "./icon-192x192.png",
+	requireInteraction: boolean,
+	tag: "renotify",
+	data: {
+	  time: string,
+	  message: "new order",
+	},}
+// Function to show notification
+function showNotification(title:string, options:notificationOptions) {
+	alert(navigator.userAgent)
+	if (isChromiumBasedAndroid()) {
+	  // Use service worker to show notification on Chrome for Android
+	  if ('serviceWorker' in navigator && 'PushManager' in window) {
+		navigator.serviceWorker.ready.then(function(registration) {
+		  registration.showNotification(title, options);
+		});
+	  } else {
+		console.warn("Service Worker or Push API not supported on this browser");
+	  }
+	} else if ("Notification" in window) {
+	  // Use standard Notification API for other browsers
+	  Notification.requestPermission().then(function (permission) {
+		if (permission === "granted") {
+		  new Notification(title, options);
+		}
+	  });
+	} else {
+	  console.warn("Notifications not supported on this browser");
+	}
+  }
+  
+// Usage in your onMessage handler
 onMessage(messaging, (payload) => {
-	console.log(
-		"foreground,message received in firebase.ts=> ",
-		payload.notification,
-	);
-	// alert("foreground Notification received index.ts alert");
-
+	console.log("Message received in firebase.ts=> ", payload.notification);
+  
 	const audio = new Audio("./notification.mp3");
 	audio.play();
-
-	if (Notification.permission === "granted") {
-		// Create a notification
-		// const notification = new Notification("New order !", {
-		// 	body: "Please start the delivery",
-		// 	icon: "../../public/icons/maskable_icon_x48.png",
-		// 	requireInteraction: true,
-		// 	badge: "./../public/icons/maskable_icon_x48.png",
-		// 	// image: "./../public/icons/maskable_icon_x48.png",
-		// 	tag: "renotify",
-		// 	// renotify: true,
-		// 	// sound: "../src/assets/sounds/notification.mp3",
-		// 	// timestamp: Date.parse(new Date()),
-		// 	// actions: [
-		// 	// 	{
-		// 	// 		action: "open-app",
-		// 	// 		// type: "button",
-		// 	// 		title: "Order",
-		// 	// 		icon: "../src/assets/tanker-truck.svg",
-		// 	// 	},
-		// 	// ],
-		// 	data: {
-		// 		time: new Date(Date.now()).toString(),
-		// 		message: "new order",
-		// 	},
-		// });
-
-		const notification = new Notification(payload.notification?.title as string, {
-			body: payload.notification?.body,
-			icon: "./icon-192x192.png",
-			requireInteraction: true,
-			badge: "./icon-192x192.png",
-			// image: "./../public/icons/maskable_icon_x48.png",
-			tag: "renotify",
-			// renotify: true,
-			// sound: "../src/assets/sounds/notification.mp3",
-			// timestamp: Date.parse(new Date()),
-			// actions: [
-			// 	{
-			// 		action: "open-app",
-			// 		// type: "button",
-			// 		title: "Order",
-			// 		icon: "../src/assets/tanker-truck.svg",
-			// 	},
-			// ],
-			data: {
-				time: new Date(Date.now()).toString(),
-				message: "new order",
-			},
-		});
-
-		// Handle click on the notification (optional)
-		notification.addEventListener("click", () => {
-			// Do something when the user clicks the notification
-			// window.open("/", "_blank");
-			console.log("do something when notif clicked")
-		});
-	} else if (Notification.permission !== "denied") {
-		// If permission isn't granted or denied, request permission
-		Notification.requestPermission().then((permission) => {
-			if (permission === "granted") {
-				// Now you can create the notification
-				const notification = new Notification(
-					"New order assigned !",
-					{
-						body: "Please start the delivery",
-						icon: "../../public/icons/maskable_icon_x48.png", // Replace with the path to your notification icon
-					},
-				);
-
-				// Handle click on the notification (optional)
-				notification.addEventListener("click", () => {
-					alert("Notification clicked");
-				});
-			}
-		});
-	}
-});
+  
+	showNotification(payload.notification?.title || "New Notification", {
+	  body: payload.notification?.body as string,
+	  icon: "./icon-192x192.png",
+	  requireInteraction: true,
+	  tag: "renotify",
+	  data: {
+		time: new Date(Date.now()).toString(),
+		message: "new order",
+	  },
+	});
+  });
 
 export { app, messaging };
