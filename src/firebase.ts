@@ -21,7 +21,6 @@ export const onMessageListener = () =>
     });
 });
 
-  
 type notificationOptions = { body: string,
 	icon: "./icon-192x192.png",
 	requireInteraction: boolean,
@@ -86,7 +85,7 @@ function showIOSAlert(title: string, body: string) {
 
 
 function detectPlatform() {
-	const userAgent = navigator.userAgent || navigator.vendor || ((window as Window & typeof globalThis).opera as string);
+	const userAgent = navigator.userAgent || navigator.vendor
 	
 	if (/android/i.test(userAgent)) {
 	  return 'Android';
