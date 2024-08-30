@@ -29,7 +29,7 @@ onMessage(messaging, (payload) => {
 	);
 	// alert("foreground Notification received index.ts alert");
 
-	const audio = new Audio("../src/assets/sounds/notification.mp3");
+	const audio = new Audio("./notification.mp3");
 	audio.play();
 
 	if (Notification.permission === "granted") {
@@ -60,9 +60,9 @@ onMessage(messaging, (payload) => {
 
 		const notification = new Notification(payload.notification?.title as string, {
 			body: payload.notification?.body,
-			icon: "../../public/icons/maskable_icon_x48.png",
+			icon: "./icon-192x192.png",
 			requireInteraction: true,
-			badge: "./../public/icons/maskable_icon_x48.png",
+			badge: "./icon-192x192.png",
 			// image: "./../public/icons/maskable_icon_x48.png",
 			tag: "renotify",
 			// renotify: true,
