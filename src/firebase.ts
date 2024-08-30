@@ -50,15 +50,13 @@ function showNotification(title:string, options:notificationOptions) {
 	  } else {
 		console.warn("Service Worker or Push API not supported on this browser");
 	  }
-	} else if ("Notification" in window) {
+	} else {
 	  // Use standard Notification API for other browsers
 	  Notification.requestPermission().then(function (permission) {
 		if (permission === "granted") {
 		  new Notification(title, options);
 		}
 	  });
-	} else {
-	  console.warn("Notifications not supported on this browser");
 	}
   }
   
