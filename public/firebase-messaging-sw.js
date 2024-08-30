@@ -76,38 +76,38 @@ messaging.onBackgroundMessage((payload) => {
 	// 	silent: "<Boolean>",
 	// };
 
-	// const notificationOptions = {
-	// 	body: "Please check the app to start delivery",
-	// 	icon: "../../public/icons/maskable_icon_x48.png",
-	// 	badge: "../../public/fuelbuddy-logo.svg",
-	// 	image: "../../public/fuelbuddy-logo.svg",
-	// 	tag: "renotify",
-	// 	renotify: true,
-	// 	requireInteraction: true,
-	// 	// sound: "../src/assets/sounds/notification.mp3",
-	// 	timestamp: Date.parse(new Date()),
-	// 	actions: [
-	// 		// { action: "playAudio", title: "Play Audio" },
-	// 		{
-	// 			action: "openApp",
-	// 			type: "button",
-	// 			title: "Order",
-	// 			icon: "../src/assets/tanker-truck.svg",
-	// 		},
-	// 	],
-	// 	data: {
-	// 		time: new Date(Date.now()).toString(),
-	// 		message: "going to dashboard ...",
-	// 		click_action: "/dashboard",
-	// 	},
-	// };
-	// const notificationTitle = "New Order";
+	const notificationOptions = {
+		body: "ahmed",
+		icon: "./favicon-16x16.png",
+		badge: "./favicon-32x32.png",
+		image: "./android-chrome-512x512.png",
+		tag: "renotify",
+		renotify: true,
+		requireInteraction: true,
+		sound: "./notification.mp3",
+		timestamp: Date.parse(new Date()),
+		actions: [
+			// { action: "playAudio", title: "Play Audio" },
+			{
+				action: "openApp",
+				type: "button",
+				title: "Order",
+				icon: "./vite.svg",
+			},
+		],
+		data: {
+			time: new Date(Date.now()).toString(),
+			message: "going to dashboard ...",
+			click_action: "/",
+		},
+	};
+	const notificationTitle = "Sahil";
 
 	// //show notif
-	// self.registration.showNotification(
-	// 	notificationTitle,
-	// 	notificationOptions,
-	// );
+	self.registration.showNotification(
+		notificationTitle,
+		notificationOptions,
+	);
 });
 
 //todo:remove if redundant in future
