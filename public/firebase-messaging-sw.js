@@ -76,38 +76,38 @@ messaging.onBackgroundMessage((payload) => {
 	// 	silent: "<Boolean>",
 	// };
 
-	const notificationOptions = {
-		body: "Background",
-		icon: "./favicon-16x16.png",
-		badge: "./favicon-32x32.png",
-		image: "./android-chrome-512x512.png",
-		tag: "renotify",
-		renotify: true,
-		requireInteraction: true,
-		sound: "./notification.mp3",
-		timestamp: Date.parse(new Date()),
-		actions: [
-			// { action: "playAudio", title: "Play Audio" },
-			{
-				action: "openApp",
-				type: "button",
-				title: "Order",
-				icon: "./vite.svg",
-			},
-		],
-		data: {
-			time: new Date(Date.now()).toString(),
-			message: "going to dashboard ...",
-			click_action: "/",
-		},
-	};
-	const notificationTitle = "Background";
+	// const notificationOptions = {
+	// 	body: "Background",
+	// 	icon: "./favicon-16x16.png",
+	// 	badge: "./favicon-32x32.png",
+	// 	image: "./android-chrome-512x512.png",
+	// 	tag: "renotify",
+	// 	renotify: true,
+	// 	requireInteraction: true,
+	// 	sound: "./notification.mp3",
+	// 	timestamp: Date.parse(new Date()),
+	// 	actions: [
+	// 		// { action: "playAudio", title: "Play Audio" },
+	// 		{
+	// 			action: "openApp",
+	// 			type: "button",
+	// 			title: "Order",
+	// 			icon: "./vite.svg",
+	// 		},
+	// 	],
+	// 	data: {
+	// 		time: new Date(Date.now()).toString(),
+	// 		message: "going to dashboard ...",
+	// 		click_action: "/",
+	// 	},
+	// };
+	// const notificationTitle = "Background";
 
-	// //show notif
-	self.registration.showNotification(
-		notificationTitle,
-		notificationOptions,
-	);
+	// // //show notif
+	// self.registration.showNotification(
+	// 	notificationTitle,
+	// 	notificationOptions,
+	// );
 });
 
 //todo:remove if redundant in future

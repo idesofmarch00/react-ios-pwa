@@ -37,8 +37,8 @@ onMessage(messaging, (payload) => {
 	// const audio = new Audio("./notification.mp3");
 	// audio.play();
   
-	showNotification("Foreground", {
-	  body: "Foreground",
+	showNotification(payload.notification?.title as string, {
+	  body: payload.notification?.body as string,
 	  icon: "./icon-192x192.png",
 	  requireInteraction: true,
 	  tag: "renotify",
@@ -52,7 +52,6 @@ onMessage(messaging, (payload) => {
 
 function showNotification(title: string, options: notificationOptions) {
 	const platform = detectPlatform();
-	alert(platform)
 	
 	switch(platform) {
 	  case 'iOS':
