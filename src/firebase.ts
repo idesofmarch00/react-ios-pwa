@@ -34,8 +34,8 @@ type notificationOptions = { body: string,
 onMessage(messaging, (payload) => {
 	console.log("Message received in firebase.ts=> ", payload.notification);
   
-	const audio = new Audio("./notification.mp3");
-	audio.play();
+	// const audio = new Audio("./notification.mp3");
+	// audio.play();
   
 	showNotification("Foreground", {
 	  body: "Foreground",
@@ -52,7 +52,7 @@ onMessage(messaging, (payload) => {
 
 function showNotification(title: string, options: notificationOptions) {
 	const platform = detectPlatform();
-	alert(platform);
+	alert(platform)
 	
 	switch(platform) {
 	  case 'iOS':
@@ -68,13 +68,21 @@ function showNotification(title: string, options: notificationOptions) {
 		  console.warn("Service Worker or Push API not supported on this browser");
 		}
 		break;
-	  default:
-		// For other platforms, use the Notification API
-		Notification.requestPermission().then(function (permission) {
-		  if (permission === "granted") {
-			new Notification(title, options);
-		  }
-		});
+		case 'Other':
+			// For other platforms, use the Notification API
+			Notification.requestPermission().then(function (permission) {
+			  if (permission === "granted") {
+				new Notification(title, options);
+			  }
+			});
+			break;
+		 default:
+	// For other platforms, use the Notification API
+	Notification.requestPermission().then(function (permission) {
+		if (permission === "granted") {
+		  new Notification(title, options);
+		}
+	  });
 	}
   }
   
