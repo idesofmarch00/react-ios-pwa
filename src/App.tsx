@@ -23,7 +23,7 @@ function App() {
         <h1 className="text-2xl font-bold mb-4 text-white">FCM Push Notification Test</h1>
         <p className="mb-4 text-white">This page is set up to receive push notifications from Firebase Cloud Messaging.</p>
         <div className='flex items-center justify-between'><button onClick={async()=>{await getNotificationPermission()}} className='text-blue-900 font-bold w-40 h-10 bg-green-400 rounded-lg text-sm'>Get notif permission</button>
-        <button onClick={async()=>{const token = await getMessagingToken();setText(token as string)}} className='text-blue-900 font-bold w-40 h-10 bg-blue-400 rounded-lg text-sm'>Get token</button></div>
+        <button onClick={async()=>{const token = await getMessagingToken();setText(token as string)}} className='text-blue-900 font-bold w-32 h-10 bg-blue-400 rounded-lg text-sm'>Get token</button></div>
         <button onClick={copyToClipboard} className='my-4 border overflow-auto h-20 rounded-lg p-4 text-sm font-bold text-black'><p>{text}</p></button>
     </div>
     {/* <Notification /> */}
