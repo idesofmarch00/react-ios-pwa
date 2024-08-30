@@ -1,5 +1,4 @@
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import { app, messaging } from "./firebase";
+import {  messaging } from "./firebase";
 import { getToken } from "firebase/messaging";
 
 export const getNotificationPermission = async () => {
