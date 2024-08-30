@@ -68,14 +68,6 @@ function showNotification(title: string, options: notificationOptions) {
 		  console.warn("Service Worker or Push API not supported on this browser");
 		}
 		break;
-		case 'Other':
-			// For other platforms, use the Notification API
-			Notification.requestPermission().then(function (permission) {
-			  if (permission === "granted") {
-				new Notification(title, options);
-			  }
-			});
-			break;
 		 default:
 	// For other platforms, use the Notification API
 	Notification.requestPermission().then(function (permission) {

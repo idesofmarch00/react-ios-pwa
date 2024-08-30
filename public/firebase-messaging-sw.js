@@ -17,69 +17,11 @@ const firebaseConfig = {
   appId: "1:949015997290:web:6b3aa6014df65dd85c5313"
 };
 
-// firebase.initializeApp(firebaseConfig);
-
-// // Retrieve firebase messaging
-// const messaging = firebase.messaging();
-
-// messaging.onBackgroundMessage(function(payload) {
-//   console.log('Received background message ', payload);
-
-//   const notificationTitle = payload.notification.title;
-//   const notificationOptions = {
-//     body: payload.notification.body,
-//   };
-
-//   self.registration.showNotification(notificationTitle,
-//     notificationOptions);
-// });
-
 // eslint-disable-next-line no-undef
 firebase.initializeApp({ ...firebaseConfig });
 
 // eslint-disable-next-line no-undef
 const messaging = firebase.messaging();
-
-// //todo: remove if confirmed doesn't work
-messaging.onMessage((payload) => {
-	
-	alert("foreground Notification received sw");
-
-	const notificationTitle = "foreground";
-	const notificationOptions = {
-		body: "foreground",
-		icon: "./icons/fb_min_logo.png",
-		badge: "./icons/fb_min_logo.png",
-		tag: "renotify",
-		renotify: true,
-		requireInteraction: true,
-		sound: "../src/assets/sounds/notification.mp3",
-		timestamp: Date.parse(new Date()),
-		actions: [
-			{
-				action: "open-app",
-				type: "button",
-				title: "Order",
-				icon: "../src/assets/tanker-truck.svg",
-			},
-		],
-		data: {
-			time: new Date(Date.now()).toString(),
-			message: "new order",
-		},
-	};
-
-	self.registration.showNotification(
-		notificationTitle,
-		notificationOptions,
-	);
-
-// 	// // Handle click on the notification (optional)
-// 	// notification.addEventListener("click", () => {
-// 	// 	// Do something when the user clicks the notification
-// 	// 	console.log("Notification clicked");
-// 	// });
-});
 
 //100% working
 messaging.onBackgroundMessage((payload) => {
@@ -150,74 +92,4 @@ messaging.onBackgroundMessage((payload) => {
 	// 	notificationOptions,
 	// );
 });
-
-//todo:remove if redundant in future
-// Handle notification click
-// self.addEventListener("notificationclick", (event) => {
-// 	const clickedNotification = event.notification;
-// 	clickedNotification.close();
-
-// 	const promiseChain = clients.openWindow(
-// 		event.notification.data.click_action,
-// 	);
-// 	// const promiseChain = clients.openWindow(
-// 	// 	self.location.origin + "/dashboard",
-// 	// );
-// 	event.waitUntil(promiseChain);
-// });
-
-// //Handle notification click - audio and route
-// self.addEventListener("notificationclick", (event) => {
-// 	const action = event.action;
-
-// 	// Handle notification actions
-// 	switch (action) {
-// 		// case "playAudio": {
-// 		// 	// Play the audio in the context of your web page
-// 		// 	const audio = new Audio(
-// 		// 		"../src/assets/sounds/notification.mp3",
-// 		// 	);
-// 		// 	audio.play();
-// 		// 	break;
-// 		// }
-// 		case "openApp":
-// 			{
-// 				const clickedNotification = event.notification;
-// 				clickedNotification.close();
-
-// 				//todo:remove after testing
-// 				// // const promiseChain = clients.openWindow(
-// 				// // 	event.notification.data.click_action,
-// 				// // );
-// 				// const promiseChain = clients.openWindow(
-// 				// 	self.location.origin + "/dashboard",
-// 				// );
-// 				// event.waitUntil(promiseChain);
-// 				// break;
-
-// 				const urlToOpen = self.location.origin + "/dashboard";
-
-// 				event.waitUntil(
-// 					clients
-// 						.matchAll({
-// 							type: "window",
-// 							includeUncontrolled: true,
-// 						})
-// 						.then((windowClients) => {
-// 							for (const client of windowClients) {
-// 								if (client.url === urlToOpen && "focus" in client) {
-// 									return client.focus();
-// 								}
-// 							}
-
-// 							return clients.openWindow(urlToOpen);
-// 						}),
-// 				);
-// 			}
-// 			break;
-// 		default:
-// 			// Handle default action
-// 			break;
-// 	}
-// });
 
