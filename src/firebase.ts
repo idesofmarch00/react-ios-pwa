@@ -21,13 +21,6 @@ export const onMessageListener = () =>
     });
 });
 
-// Function to detect Chrome on Android
-function isChromiumBasedAndroid() {
-	return /android/i.test(navigator.userAgent) &&
-		   /chrome/i.test(navigator.userAgent) &&
-		   !(/firefox|opera|edge|opr\//i.test(navigator.userAgent));
-  }
-  
 type notificationOptions = { body: string,
 	icon: "./icon-192x192.png",
 	requireInteraction: boolean,
@@ -36,29 +29,6 @@ type notificationOptions = { body: string,
 	  time: string,
 	  message: "new order",
 	},}
-// Function to show notification
-function showNotification(title:string, options:notificationOptions) {
-
-	alert(navigator.userAgent);
-
-	if (isChromiumBasedAndroid()) {
-	  // Use service worker to show notification on Chrome for Android
-	  if ('serviceWorker' in navigator && 'PushManager' in window) {
-		navigator.serviceWorker.ready.then(function(registration) {
-		  registration.showNotification(title, options);
-		});
-	  } else {
-		console.warn("Service Worker or Push API not supported on this browser");
-	  }
-	} else {
-	  // Use standard Notification API for other browsers
-	  Notification.requestPermission().then(function (permission) {
-		if (permission === "granted") {
-		  new Notification(title, options);
-		}
-	  });
-	}
-  }
   
 // Usage in your onMessage handler
 onMessage(messaging, (payload) => {
@@ -79,4 +49,56 @@ onMessage(messaging, (payload) => {
 	});
   });
 
+
+function showNotification(title: string, options: notificationOptions) {
+	const platform = detectPlatform();
+	
+	switch(platform) {
+	  case 'iOS':
+		// On iOS, we'll use a custom alert or UI element
+		showIOSAlert(title, options.body);
+		break;
+	  case 'ChromeAndroid':
+		if ('serviceWorker' in navigator && 'PushManager' in window) {
+		  navigator.serviceWorker.ready.then(function(registration) {
+			registration.showNotification(title, options);
+		  });
+		} else {
+		  console.warn("Service Worker or Push API not supported on this browser");
+		}
+		break;
+	  default:
+		// For other platforms, use the Notification API
+		Notification.requestPermission().then(function (permission) {
+		  if (permission === "granted") {
+			new Notification(title, options);
+		  }
+		});
+	}
+  }
+  
+function showIOSAlert(title: string, body: string) {
+	// Implement a custom alert for iOS
+	// This could be a custom UI element in your app
+	alert(`${title}\n\n${body}`);
+  }
+
+
+function detectPlatform() {
+	const userAgent = navigator.userAgent || navigator.vendor
+	
+	if (/android/i.test(userAgent)) {
+	  return 'Android';
+	}
+	
+	if (/iPad|iPhone|iPod/.test(userAgent) && !('MSStream' in window)) {
+	  return 'iOS';
+	}
+	
+	if (/chrome/i.test(userAgent) && /android/i.test(userAgent)) {
+	  return 'ChromeAndroid';
+	}
+	
+	return 'Other';
+}
 export { app, messaging };
